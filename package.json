@@ -1,0 +1,24 @@
+{
+  "name": "react-toolbelt",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Cristhian Gutierrez",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "react-native": "^0.77.0",
+    "react-toolbelt": "^3.1.2",
+    "tslib": "^2.8.1",
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  },
+  "packageManager": "yarn@4.6.0",
+  "volta": {
+    "node": "20.18.2"
+  }
+}

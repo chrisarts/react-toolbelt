@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": false,
+    "moduleResolution": "node",
+    "resolvePackageJsonExports": false,
+    "module": "ES2022",
+    "rootDir": "src",
+    "declarationDir": "build/dts",
+    "outDir": "build/esm"
+  }
+}

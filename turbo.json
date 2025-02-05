@@ -1,0 +1,107 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build:compiler", "^build"],
+      "cache": true,
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/test",
+        "!**/tests",
+        "!**/tsconfig.*",
+        "src/**"
+      ],
+      "outputs": [
+        "build/**",
+        "dist/**"
+      ]
+    },
+    "build:watch": {
+      "dependsOn": ["build:compiler"],
+      "persistent": true,
+      "cache": false
+    },
+    "build:compiler": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/test",
+        "!**/tests",
+        "!**/tsconfig.*"
+      ],
+      "outputs": [
+        "build/**",
+        "dist/**"
+      ]
+    },
+    "build:tsc:watch": {
+      "persistent": true,
+      "cache": false
+    },
+    "dev-tools:dev": {
+      "cache": false,
+      "persistent": true,
+      "interactive": true,
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/test",
+        "!**/tests",
+        "**/webui/**/*"
+      ],
+      "outputs": [
+        "build/**",
+        "dist/**"
+      ]
+    },
+    "lint": {
+      "cache": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "next:app:dev": {
+      "cache": false,
+      "interactive": true,
+      "outputLogs": "full",
+      "persistent": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "build/**"
+      ]
+    },
+    "docs:dev": {
+      "cache": false,
+      "interactive": true,
+      "outputLogs": "full",
+      "persistent": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "build/**"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "gen:jsdocs": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/test",
+        "!**/tests",
+        "**/webui/**/*",
+        "**/src",
+        "jsdoc.json"
+      ],
+      "cache": true
+    }
+  }
+}
