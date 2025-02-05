@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node", "react-native"],
+    "exactOptionalPropertyTypes": false,
+    "module": "ESNext",
+    "noImplicitAny": false,
+    "alwaysStrict": false,
+    "strict": true,
+    "moduleResolution": "node",
+    "rootDir": "src"
+  },
+  "include": ["src"],
+  "exclude": ["build"]
+}

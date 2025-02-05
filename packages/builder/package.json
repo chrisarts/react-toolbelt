@@ -16,7 +16,7 @@
   "type": "module",
   "main": "./build/main.js",
   "bin": {
-    "twin": "./build/main.js"
+    "toolbelt-build": "./build/main.js"
   },
   "files": [
     "LICENSE",
