@@ -1,7 +1,5 @@
 export { hash, createHash, getBitMask, getHashMask, simpleHash } from './hash.utils.js';
 
-export { createStore, createValueStore } from './store.utils.js';
-
 export {
   getNonce,
   escapeSelector,

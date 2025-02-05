@@ -1,7 +1,7 @@
 {
-  "name": "@react-toolbelt/arc-parser",
+  "name": "@react-toolbelt/css-in-js",
   "version": "1.0.0",
-  "description": "Parser combinators library",
+  "description": "Helpers for common uses on css in js",
   "homepage": "https://github.com/chrisarts/react-toolbelt#readme",
   "bugs": {
     "url": "https://github.com/chrisarts/react-toolbelt/issues"
@@ -9,33 +9,35 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/chrisarts/react-toolbelt",
-    "directory": "packages/arc-parser"
+    "directory": "packages/css-in-js"
   },
   "license": "MIT",
   "author": "Cristhian Gutierrez",
-  "type": "module",
   "exports": {
-    "./package.json": "./package.json",
     ".": {
       "types": "./build/dts/index.d.ts",
       "import": "./build/esm/index.js",
       "default": "./build/cjs/index.js"
     },
-    "./types": {
-      "types": "./build/dts/types.d.ts",
-      "import": "./build/esm/types.js",
-      "default": "./build/cjs/types.js"
+    "./KeyMap": {
+      "types": "./build/dts/KeyMap.d.ts",
+      "import": "./build/esm/KeyMap.js",
+      "default": "./build/cjs/KeyMap.js"
     }
   },
   "main": "./build/cjs/index.js",
   "module": "./build/esm/index.js",
   "types": "./build/dts/index.d.ts",
   "files": [
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
     "build",
-    "src"
+    "src",
+    "KeyMap",
+    "react",
+    "server",
+    "tree",
+    "LICENSE",
+    "CHANGELOG.md",
+    "README.md"
   ],
   "scripts": {
     "build": "npx toolbelt-build pack-dev",
@@ -43,7 +45,11 @@
     "clean": "rm -rf build",
     "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
     "lint": "biome lint",
-    "test": "vitest"
+    "test": "npx vitest"
+  },
+  "dependencies": {
+    "@react-toolbelt/arc-parser": "workspace:*",
+    "@react-toolbelt/helpers": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

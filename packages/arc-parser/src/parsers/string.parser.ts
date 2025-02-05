@@ -11,7 +11,7 @@ export const char = (cs: string): Parser<string> =>
     }
     return updateParserError(
       state,
-      `Char: Parser error, expected char ${cs} but got ${sliced}`,
+      `Char: Parser error, expected char ${cs} but got ${sliced}, at ${state.cursor}`,
     );
   });
 
@@ -78,6 +78,8 @@ export const everyCharUntil = (char: string): Parser<string> =>
 
 export const optionalWhitespace = maybe(whitespace).map((x) => x || '');
 
+export const newLine = regex(/^\n/);
+
 export const startOfInput = new Parser<null>((state) => {
   if (state.isError) return state;
 
@@ -94,7 +96,7 @@ export const startOfInput = new Parser<null>((state) => {
 
 export const anythingExcept = function anythingExcept(
   parser: Parser<any>,
-): Parser<number> {
+): Parser<string> {
   return new Parser(function anythingExcept$state(state) {
     if (state.isError) return state;
     const { target, cursor } = state;

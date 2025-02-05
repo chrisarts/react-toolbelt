@@ -1,5 +1,9 @@
 import * as path from 'node:path';
-import { defineWorkspace, type UserWorkspaceConfig } from 'vitest/config';
+import {
+  type TestProjectConfiguration,
+  type UserWorkspaceConfig,
+  defineWorkspace,
+} from 'vitest/config';
 
 // Remaining issues:
 // - Random failures (browser): https://github.com/vitest-dev/vitest/issues/4497
@@ -14,15 +18,22 @@ import { defineWorkspace, type UserWorkspaceConfig } from 'vitest/config';
 const project = (
   config: UserWorkspaceConfig['test'] & { name: `${string}|${string}` },
   root = config.root ?? path.join(__dirname, `packages/${config.name.split('|').at(0)}`),
-) => ({
-  extends: 'vitest.shared.ts',
-  test: { root, ...config },
+): TestProjectConfiguration => ({
+  extends: 'vitest.config.ts',
+  test: { root, logHeapUsage: true, ...config },
 });
 
 export default defineWorkspace([
-  // Add specialized configuration for some packages.
-  // project({ name: "effect|browser", environment: "happy-dom" }),
-  // project({ name: "schema|browser", environment: "happy-dom" }),
   // Add the default configuration for all packages.
-  'packages/*',
+  project({ name: 'arc-parser|browser' }),
+  project({ name: 'arc-parser|node', environment: 'node' }),
+  project({ name: 'helpers|browser' }),
+  project({ name: 'builder|browser' }),
+  project({ name: 'store|node', environment: 'node' }),
+  project({
+    name: 'store|browser',
+    environment: 'happy-dom',
+    disableConsoleIntercept: true,
+    logHeapUsage: true,
+  }),
 ]);

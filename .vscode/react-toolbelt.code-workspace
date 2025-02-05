@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"name": "✨ react-toolbelt",
+			"path": ".."
+		},
+		{
+			"name": "📦 @lib/store",
+			"path": "../packages/store"
+		},
+		{
+			"name": "📦 @lib/helpers",
+			"path": "../packages/helpers"
+		},
+		{
+			"name": "📦 @lib/arc-parser",
+			"path": "../packages/arc-parser"
+		},
+		{
+			"name": "📦 @lib/cli",
+			"path": "../packages/builder"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "✨ react-toolbelt"
+	}
+}

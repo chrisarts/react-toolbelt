@@ -1,4 +1,5 @@
 import { inspect } from 'util';
+import { describe, expect, it } from 'vitest';
 import * as P from '../src';
 
 const csvString = P.between(P.char('"'))(P.char('"'))(

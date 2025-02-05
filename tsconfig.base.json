@@ -17,7 +17,7 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "moduleDetection": "force",
     "esModuleInterop": false,
-    "types": ["node", "react-native"],
+    "types": ["node", "react-native", "vite/client", "vitest"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "allowSyntheticDefaultImports": true,

@@ -1,4 +1,4 @@
-export function createStore<StoreShape>(initialState: StoreShape) {
+export function createStore<StoreShape>(initialState: StoreShape, debug = false) {
   let currentState = initialState;
 
   const listeners = new Set<(state: StoreShape) => void>();
@@ -12,12 +12,22 @@ export function createStore<StoreShape>(initialState: StoreShape) {
 
   function subscribe(listener: (state: StoreShape) => void) {
     listeners.add(listener);
-    return () => listeners.delete(listener);
+    return () => {
+      listeners.delete(listener);
+    };
   }
 
   function setState(fn: (state: StoreShape) => StoreShape) {
-    currentState = fn(currentState);
-    listeners.forEach((listener) => listener(currentState));
+    const nextState = fn(currentState);
+    if (debug) {
+      console.log('STATE_CHANGE: ', currentState);
+    }
+    if (!Object.is(currentState, nextState)) {
+      currentState = nextState;
+      listeners.forEach((listener) => listener(currentState));
+    } else {
+      console.warn('You should not mutate the state directly');
+    }
   }
 
   function getState() {

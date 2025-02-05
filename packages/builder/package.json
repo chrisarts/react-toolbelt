@@ -37,7 +37,9 @@
     "@effect/cli": "^0.48.3",
     "@effect/platform": "^0.69.3",
     "@effect/platform-node": "^0.64.4",
-    "effect": "^3.10.0",
+    "@effect/printer-ansi": "^0.40.9",
+    "@effect/typeclass": "^0.31.9",
+    "effect": "^3.12.9",
     "lodash.merge": "4.6.2",
     "ts-morph": "^24.0.0"
   },

@@ -1,9 +1,20 @@
-import * as P from '../src';
+import { describe, expect, it } from 'vitest';
+import pkgJson from '../package.json?raw';
+import * as P from '../src/index.js';
 
 type AnyType = string | number | boolean | number | null | object | AnyType[];
 
 const JSONValue: P.Parser<AnyType> = P.recursiveParser(() =>
-  P.choice([stringParser, numberValue, booleanValue, nullValue, arrayParser, JSONParser]),
+  P.whitespaceSurrounded(
+    P.choice([
+      stringParser,
+      numberValue,
+      booleanValue,
+      nullValue,
+      arrayParser,
+      JSONParser,
+    ]),
+  ),
 );
 
 const scaped = P.sequenceOf([P.literal('\\'), P.char('"')]).map((x) => x[1]);
@@ -33,74 +44,40 @@ const JSONParser = P.betweenSpacedBrackets(P.separatedBySpacedComma(JSONKeyValue
   Object.fromEntries,
 );
 
-const parsThisFuckJSON = (data: string) => {
-  return JSONValue.run(data);
-};
-
-const test1 = `
-{
-  "name": "@native-twin/arc-parser",
-  "version": "6.0.1",
-  "description": "Parser combinators library",
-  "homepage": "https://github.com/chrisarts/react-toolbelt#readme",
-  "bugs": {
-    "url": "https://github.com/chrisarts/react-toolbelt/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chrisarts/react-toolbelt",
-    "directory": "packages/arc-parser"
-  },
-  "license": "MIT",
-  "author": "Cristhian Gutierrez",
-  "sideEffects": false,
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "scripts": {
-    "build": "yarn twin build",
-    "clean": "rm -rf build",
-    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
-    "lint": "eslint \\"./**/*.{ts,tsx}\\"",
-    "test": "jest"
-  },
-  "optionalDependencies": {
-    "jest": "*"
-  },
-  "publishConfig": {
-    "access": "public",
-    "directory": "_release/package"
-  }
-}
-
-`;
-
-
 describe('JSON parser', () => {
   it('Parse package.json', () => {
-    const result = parsThisFuckJSON(test1); //?
-    expect(result.isError).toBeFalsy();
+    const result = JSONValue.run(pkgJson); //?
+    let message = '';
+    if (result.isError) {
+      message = result.error ?? '';
+    }
+    expect(result.isError, message).toBeFalsy();
     if (!result.isError) {
-      expect(result.result).toStrictEqual(JSON.parse(test1));
+      expect(result.result).toStrictEqual(JSON.parse(pkgJson));
     }
   });
 });
 
-// const getObject = (token: JsonObject | AnyToken): any => {
-//   if (token.type === 'OBJECT') return fromObject(token);
-//   if (token.type === 'ARRAY') {
-//     return fromArray(token);
-//   }
+const betweenSquareBrackets = P.between(P.char('['))(P.char(']'));
 
-//   return token.value;
+const separatedByComma = P.separatedBy(P.char(','));
 
-//   function fromObject(token: JsonObject) {
-//     const tuples = token.value.map((x) => [x[0], getObject(x[1])]);
-//     return Object.fromEntries(tuples);
-//   }
-//   function fromArray(token: ArrayToken): any[] {
-//     return token.value.map((x) => getObject(x));
-//   }
-// };
-// if (!result.isError) {
-//   getObject(result.result);
-// }
+const value: P.Parser<AnyType> = P.recursiveParser(() =>
+  P.whitespaceSurrounded(P.choice([P.digits, P.letters, P.alphanumeric, parser])),
+);
+const parser = betweenSquareBrackets(separatedByComma(value));
+
+describe('Array Parser', () => {
+  it('Parse a nested array', () => {
+    const result = P.whitespaceSurrounded(parser).run(`
+      [r,[2,d,
+      [2,a,4]
+      ],f]
+      `); //?
+    let message = '';
+    if (result.isError) {
+      message = result.error ?? '';
+    }
+    expect(result.isError, message).toBeFalsy();
+  });
+});

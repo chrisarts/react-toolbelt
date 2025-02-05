@@ -17,7 +17,7 @@ export const TSCompilerOptions: ts.CompilerOptions = {
   moduleDetection: ts.ModuleDetectionKind.Force,
   esModuleInterop: false,
   stripInternal: false,
-  types: ['node', 'react-native', 'jest'],
+  types: ['node', 'react-native'],
   skipLibCheck: true,
   skipDefaultLibCheck: true,
   allowSyntheticDefaultImports: true,

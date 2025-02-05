@@ -61,7 +61,7 @@
 //     "clean": "rm -rf build",
 //     "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
 //     "lint": "eslint \\"./**/*.{ts,tsx}\\"",
-//     "test": "jest"
+//     "test": "vitest"
 //   },
 //   "optionalDependencies": {
 //     "jest": "*"
